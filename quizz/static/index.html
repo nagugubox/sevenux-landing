@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADS Final Quiz - Preparación de Examen</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for premium icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS stylesheet link -->
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    
+    <div class="app-container">
+        <!-- Main Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">
+                    <h1>ADS Final Quiz</h1>
+                    <span>Preparador Iterativo de Examen</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="btn-theme-toggle" class="btn-icon" title="Cambiar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button id="btn-stats" class="btn-icon" title="Ver Estadísticas Históricas">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Setup Screen (Menu Principal) -->
+            <section id="screen-setup" class="screen card active animate-fade-in">
+                <div class="setup-header">
+                    <h2>¿Cómo querés estudiar hoy?</h2>
+                    <p>Elegí una modalidad de estudio para prepararte para el examen final de Análisis y Diseño de Sistemas.</p>
+                </div>
+
+                <div class="modes-grid">
+                    <!-- Iterative Learning Mode -->
+                    <div class="mode-card featured" data-mode="iterative">
+                        <div class="mode-badge">Recomendado</div>
+                        <div class="mode-icon"><i class="fa-solid fa-rotate logo-icon"></i></div>
+                        <h3>Aprendizaje Iterativo</h3>
+                        <p>El sistema recordará tus errores en este dispositivo y priorizará volverte a preguntar lo que fallaste hasta que lo domines.</p>
+                        <div class="mode-status-info" id="iterative-errors-count">Cargando errores...</div>
+                    </div>
+
+                    <!-- Free Practice Mode -->
+                    <div class="mode-card" data-mode="practice">
+                        <div class="mode-icon"><i class="fa-solid fa-shuffle"></i></div>
+                        <h3>Simulación / Práctica</h3>
+                        <p>Preguntas aleatorias de toda la base de datos de examen para simular una evaluación integral de la materia.</p>
+                    </div>
+                </div>
+
+                <!-- Topic selection -->
+                <div class="category-selection-container">
+                    <h3>Filtrar por Categoría (Opcional)</h3>
+                    <div class="categories-list" id="setup-categories-list">
+                        <!-- Filled by JS -->
+                        <div class="loader"></div>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <div class="action-row">
+                    <button id="btn-start-quiz" class="btn-primary">
+                        Comenzar Sesión <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Quiz Screen -->
+            <section id="screen-quiz" class="screen card animate-fade-in">
+                <!-- Quiz Progress Bar & Info -->
+                <div class="quiz-progress-wrapper">
+                    <div class="quiz-info-row">
+                        <span id="quiz-category-tag" class="category-tag">Categoría</span>
+                        <div class="progress-ratio">
+                            Pregunta <span id="current-question-num">1</span> de <span id="total-questions-num">--</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="quiz-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Question Area -->
+                <div class="question-container">
+                    <h3 id="question-text">¿Cargando pregunta...?</h3>
+                </div>
+
+                <!-- Options/Choices -->
+                <div class="options-container" id="choices-list">
+                    <!-- Filled by JS -->
+                </div>
+
+                <!-- Feedback & Explanation Container -->
+                <div id="feedback-container" class="feedback-container hidden">
+                    <div class="feedback-header">
+                        <i id="feedback-icon" class="fa-solid"></i>
+                        <span id="feedback-title">¡Respuesta correcta!</span>
+                    </div>
+                    <div class="explanation-box">
+                        <h4>Explicación del Apunte Final:</h4>
+                        <div id="explanation-text" class="explanation-content">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Actions Footer -->
+                <div class="quiz-actions-footer">
+                    <button id="btn-show-explanation" class="btn-secondary hidden">
+                        <i class="fa-solid fa-book-open"></i> Ver Explicación
+                    </button>
+                    <button id="btn-next-question" class="btn-primary">
+                        Siguiente Pregunta <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Screen -->
+            <section id="screen-results" class="screen card animate-fade-in">
+                <div class="results-header">
+                    <div class="results-icon-wrapper">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h2>¡Sesión Finalizada!</h2>
+                    <p id="results-message">Excelente trabajo completando las preguntas de repaso.</p>
+                </div>
+
+                <!-- Score Grid -->
+                <div class="score-grid">
+                    <div class="score-item">
+                        <span class="score-num" id="res-score-pct">0%</span>
+                        <span class="score-label">Efectividad</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-num" id="res-correct-count">0</span>
+                        <span class="score-label">Correctas</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-num" id="res-incorrect-count">0</span>
+                        <span class="score-label">Incorrectas</span>
+                    </div>
+                </div>
+
+                <!-- Action choices -->
+                <div class="action-buttons-group">
+                    <button id="btn-restart-errors" class="btn-primary featured-btn hidden">
+                        Estudiar Errores (<span id="res-errors-left">0</span>) <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                    <button id="btn-return-menu" class="btn-secondary">
+                        Volver al Menú Principal <i class="fa-solid fa-house"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Stats Modal / Section overlay -->
+        <section id="modal-stats" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3>Estadísticas Acumuladas</h3>
+                    <button id="btn-close-stats" class="btn-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-overview">
+                        <div class="stat-box">
+                            <span class="stat-val" id="stats-total-answered">0</span>
+                            <span class="stat-lbl">Preguntas Respondidas</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val" id="stats-avg-score">0%</span>
+                            <span class="stat-lbl">Tasa de Acierto</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-details">
+                        <h4>Progreso del Aprendizaje Iterativo:</h4>
+                        <p>Preguntas marcadas para refuerzo en este dispositivo: <strong id="stats-errors-queued">0</strong></p>
+                        <div class="bar-chart-container">
+                            <!-- Category progress loaded by JS -->
+                            <div id="category-stats-container"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer-actions">
+                        <button id="btn-reset-history" class="btn-danger">
+                            <i class="fa-solid fa-trash-can"></i> Restablecer Datos de Progreso
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JS app file script link -->
+    <script src="static/app.js"></script>
+</body>
+</html>
